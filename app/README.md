@@ -13,7 +13,7 @@
 * export FLASK_APP='.'
 
 # Running App
-* from root director run 'pipenv shell'
+* from root directory of app (ironbark-k8s-self-service) run 'pipenv shell'
 * from /app run '. ./env_prep.sh'
 * make sure you're in app/frontend/src directory
 * flask run --host=0.0.0.0 --port=3001
