@@ -72,5 +72,4 @@ def create_app(test_config=None):
 
         return render_template('namespaces_add.html')
 
-
     return app
