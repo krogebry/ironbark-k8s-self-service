@@ -13,6 +13,7 @@
 * export FLASK_APP='.'
 
 # Running App
+
 * from root directory of app (ironbark-k8s-self-service) run 'pipenv shell'
 * from /app run '. ./env_prep.sh'
 * IF the k8s cluster you are querying is different than http://localhost:8080
