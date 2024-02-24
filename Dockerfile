@@ -2,13 +2,13 @@
 FROM ubuntu:22.04
 
 # Install Python and pip 
-RUN apt-get update  && \ 
+RUN apt-get update && \
     apt-get install -y python3 python3-pip
 
 # Install app requirements 
 RUN apt-get install software-properties-common -y 
 RUN add-apt-repository ppa:deadsnakes/ppa -y
-RUN install python 3.7 libpq-dev git pipenv -y 
+RUN install python-3.7 libpq-dev git pipenv -y
 RUN install python3-dev libpq-dev From the ticketlab-frontend directory
 RUN pipenv--python=$(which python3.8) install flask requirements Flask-login oauthlib
 RUN export FLASK_ENV=development
