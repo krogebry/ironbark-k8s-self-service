@@ -1,5 +1,5 @@
 # Use an officail Ubuntu base image 
-From ubuntu 22.04 
+FROM ubuntu:22.04
 
 # Install Python and pip 
 RUN apt-get update  && \ 
