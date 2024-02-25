@@ -39,28 +39,41 @@ def create_app(test_config=None):
     @app.route('/')
     def index():
 
-        return render_template('namespaces_index.html')
+        return redirect(url_for('namespaces'))
 
     @app.route('/namespaces')
     def namespaces():        
 
-        response_API = requests.get(app.config['API_URL'] + '/api/v1/namespaces')
-        data = json.loads(response_API.text)
-        metadata = data['items']
-        return render_template('namespaces_index.html', namespaces=metadata)
+        # response_API = requests.get(app.config['API_URL'] + '/api/v1/namespaces')
+        # data = json.loads(response_API.text)
+        configuration = kubernetes.client.Configuration()
+        #configuration.host = app.config['API_URL']
+        # Enter a context with an instance of the API kubernetes.client
+        with kubernetes.client.ApiClient(configuration) as api_client:
+            api_instance = kubernetes.client.CoreV1Api(api_client)
+            try:
+                api_response = api_instance.list_namespace()
+                metadata = api_response.items
+                return render_template('namespaces_index.html', namespaces=metadata)
+            except ApiException as e:
+                print("Exception when calling CoreV1Api->create_namespace: %s\n" % e)
+
+
+            return redirect(url_for('namespaces'))
+
+
 
     @app.route('/namespace/create', methods=["POST", "GET"])
     def namespace_add():
         
         if request.method == 'POST':
             configuration = kubernetes.client.Configuration()
-            configuration.host = app.config['API_URL']
+            #configuration.host = app.config['API_URL']
             # Enter a context with an instance of the API kubernetes.client
             with kubernetes.client.ApiClient(configuration) as api_client:
                 # Create an instance of the API class
                 api_instance = kubernetes.client.CoreV1Api(api_client)
                 meta = kubernetes.client.V1ObjectMeta(name=request.form["namespaceName"])
-                print(meta)
                 body = kubernetes.client.V1Namespace(metadata=meta) # V1Namespace | 
 
                 try:
