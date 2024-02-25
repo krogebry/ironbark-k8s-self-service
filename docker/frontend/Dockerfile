@@ -9,23 +9,25 @@ RUN apt-get update && \
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt-get install -y python3 libpq-dev git python3-dev libpq-dev
-RUN pipenv --python=$(which python3) install flask requirements Flask-login oauthlib
-RUN export FLASK_ENV=development
-RUN export FLASK_APP='.'
+RUN python3 -m pip install urllib3 flask Flask-login kubernetes
+# RUN pipenv install flask requirements Flask-login oauthlib
 
-# Set the working directory in the container 
-WORKDIR /app
-
-# Copy the working directory contents in the container 
-COPY . /app
+COPY ../../app /app/
+# WORKDIR /app
 
 #Install and needed dependencies specified in init.py 
-RUN pip3 install --no-cache-dir - r init.py       
-RUN pipenv shell
-RUN ./env_prep.sh
+# RUN pip3 install --no-cache-dir -r init.py
+# RUN pipenv shell
+# RUN ./env_prep.sh
 
 # Set directory for running app
 WORKDIR /app/frontend/src
 
 # Start App
-RUN flask run --host=0.0.0.0 --port=3001
+ENV FLASK_ENV=development
+ENV FLASK_APP='.'
+# RUN flask run --host=0.0.0.0 --port=3001
+
+COPY docker/frontend/entrypoint.sh /app/frontend/src
+
+ENTRYPOINT ["./entrypoint.sh"]
