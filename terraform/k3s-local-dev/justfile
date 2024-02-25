@@ -1,0 +1,17 @@
+#!/usr/bin/env just --justfile
+
+plan:
+    #!/usr/bin/env bash
+    terraform \
+      plan \
+      -var "clientId=$(cat ~/.tailscale/oauth-client-id)" \
+      -var "clientSecret=$(cat ~/.tailscale/oauth-client-secret)"
+
+
+apply:
+    #!/usr/bin/env bash
+    terraform \
+      apply \
+      -var "clientId=$(cat ~/.tailscale/oauth-client-id)" \
+      -var "clientSecret=$(cat ~/.tailscale/oauth-client-secret)"
+

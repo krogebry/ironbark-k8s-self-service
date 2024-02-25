@@ -5,14 +5,29 @@ resource "helm_release" "docker-registry" {
   repository = "https://helm.twun.io"
   namespace = data.kubernetes_namespace_v1.kube-system.metadata[0].name
 
-  set {
-    name  = "service.nodePort"
-    value = 30005
+}
+
+resource "kubernetes_ingress_v1" "ts-docker-registry" {
+  metadata {
+    name      = "tailscale-docker-registry"
+    namespace = "kube-system"
+    annotations = {
+      "tailscale.com/hostname" = "docker"
+    }
   }
 
-  set {
-    name  = "service.type"
-    value = "NodePort"
+  spec {
+    default_backend {
+      service {
+        name = "docker-registry"
+        port {
+          number = 5000
+        }
+      }
+    }
+    ingress_class_name = "tailscale"
+    tls {
+      hosts = ["docker.tailff458.ts.net"]
+    }
   }
-
 }
