@@ -6,11 +6,10 @@ RUN apt-get update && \
     apt-get install -y python3 python3-pip
 
 # Install app requirements 
-RUN apt-get install software-properties-common -y 
-RUN add-apt-repository ppa:deadsnakes/ppa -y
-RUN install python-3.7 libpq-dev git pipenv -y
-RUN install python3-dev libpq-dev From the ticketlab-frontend directory
-RUN pipenv--python=$(which python3.8) install flask requirements Flask-login oauthlib
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:deadsnakes/ppa
+RUN apt-get install -y python3 libpq-dev git python3-dev libpq-dev
+RUN pipenv --python=$(which python3) install flask requirements Flask-login oauthlib
 RUN export FLASK_ENV=development
 RUN export FLASK_APP='.'
 
