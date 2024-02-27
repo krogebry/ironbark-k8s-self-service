@@ -64,8 +64,6 @@ def create_app(test_config=None):
 
         return redirect(url_for('namespaces'))
 
-
-
     @app.route('/namespace/create', methods=["POST", "GET"])
     def namespace_add():
         
