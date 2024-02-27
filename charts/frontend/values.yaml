@@ -1,4 +1,4 @@
-# Default values for bkroger-test.
+# Default values for frontend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -47,13 +47,13 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: bkroger-dev.tailff458.ts.net
+    - host: mistyayn-dev.tailff458.ts.net
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
     - hosts:
-        - bkroger-dev.tailff458.ts.net
+        - mistyayn-dev.tailff458.ts.net
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

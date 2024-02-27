@@ -19,7 +19,8 @@ def create_app(test_config=None):
         # Load configuration from config.py
         app.config.from_pyfile('config.py', silent=True)
         try:
-            config.load_kube_config()
+            # config.load_kube_config()
+            config.load_incluster_config()
             c = Configuration().get_default_copy()
         except AttributeError:
             c = Configuration()
@@ -62,8 +63,6 @@ def create_app(test_config=None):
             print("Exception when calling CoreV1Api->create_namespace: %s\n" % e)
 
         return redirect(url_for('namespaces'))
-
-
 
     @app.route('/namespace/create', methods=["POST", "GET"])
     def namespace_add():
