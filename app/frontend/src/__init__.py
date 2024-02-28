@@ -17,9 +17,10 @@ def create_app(test_config=None):
 
     if test_config is None:
         # Load configuration from config.py
+
         app.config.from_pyfile('config.py', silent=True)
         try:
-
+            print(app.config['LOCAL_DEV'])
             if app.config['LOCAL_DEV'] == "1":
                 config.load_kube_config()
             else:

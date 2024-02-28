@@ -1,8 +1,8 @@
 
-build-frontend version="0.1.0-dev":
+build-frontend version="0.2.0-dev":
     docker buildx build -f docker/frontend/Dockerfile -t docker.tailff458.ts.net:{{ version }} .
 
-push-frontend version="0.1.0-dev":
+push-frontend version="0.2.0-dev":
     docker \
       buildx \
       build \
@@ -11,12 +11,12 @@ push-frontend version="0.1.0-dev":
       -t docker.tailff458.ts.net/ironbark/app/frontend:{{ version }} \
       .
 
-run-frontend version="0.1.0-dev":
+run-frontend version="0.2.0-dev":
     docker \
       run \
       -v ~/.kube/config:/root/.kube/config \
       -p 3001:3001 \
-      guzila:{{ version }}
+      docker.tailff458.ts.net/ironbark/app/frontend:{{ version }}
 
 list-namespaces:
     #!/usr/bin/env python3
