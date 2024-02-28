@@ -19,8 +19,11 @@ def create_app(test_config=None):
         # Load configuration from config.py
         app.config.from_pyfile('config.py', silent=True)
         try:
-            # config.load_kube_config()
-            config.load_incluster_config()
+
+            if app.config['LOCAL_DEV'] == "1":
+                config.load_kube_config()
+            else:
+                config.load_incluster_config()
             c = Configuration().get_default_copy()
         except AttributeError:
             c = Configuration()
