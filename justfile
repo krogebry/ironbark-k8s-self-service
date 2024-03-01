@@ -1,4 +1,3 @@
-
 version := `cat VERSION`
 
 build-frontend:
@@ -12,7 +11,7 @@ push-frontend:
       -f docker/frontend/Dockerfile \
       -t docker.tailff458.ts.net/ironbark/app/frontend:{{ version }} \
       .
-
+      
 run-frontend:
     docker \
       run \
