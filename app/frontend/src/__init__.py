@@ -60,11 +60,11 @@ def create_app(test_config=None):
         # Enter a context with an instance of the API kubernetes.client
         api_instance = client.CoreV1Api()
         try:
-            api_response = api_instance.list_namespace()
+            api_response = api_instance.list_namespace(label_selector="apistatus=created")
             metadata = api_response.items
             return render_template('namespaces_index.html', namespaces=metadata)
         except ApiException as e:
-            print("Exception when calling CoreV1Api->create_namespace: %s\n" % e)
+            print("Exception when calling CoreV1Api->list_namespace: %s\n" % e)
 
         return redirect(url_for('namespaces'))
 
@@ -75,7 +75,7 @@ def create_app(test_config=None):
             # Enter a context with an instance of the API kubernetes.client
             api_instance = client.CoreV1Api()
             try:
-                meta = client.V1ObjectMeta(name=request.form["namespaceName"])
+                meta = client.V1ObjectMeta(name=request.form["namespaceName"],labels={"apistatus":"created"})
                 body = client.V1Namespace(metadata=meta) # V1Namespace | 
                 api_response = api_instance.create_namespace(body)
             except ApiException as e:
